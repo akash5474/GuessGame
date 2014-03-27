@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Guessing Game</title>
+    <link rel="stylesheet" type="text/css"
+        href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/guess-game.css">
+
+    <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+    <script type="text/javascript" src="js/guessLogic.js"></script>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="navbar">
+        <h1>Guess The Number</h1>
+      </div>
+      <div class="row" id="guess-count">
+        <div class="col-md-offset-4 col-md-4">
+          <p>5 Guesses Remaining</p>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div id="tab" class="col-md-offset-4 col-md-4 col-sm-10 col-sm-offset-1
+              col-xs-10 col-xs-offset-1">
+            <input placeholder="Input Number 1-100" id="guess-field" class="form-control">
+            <br>
+            <p id="marquee">Guess a number between 1 and 100</p>
+            <br>
+            <button id="submit" type="Submit" class="btn btn-info btn-lg">Submit</button>
+          </div>
+          <div id="guess-list" class="col-md-4 col-sm-12 col-xs-12">
+            <ul>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="container">
+        <div class="row" id="game-controls">
+          <div class="col-md-offset-4 col-md-4">
+            <button id="replay" type="Submit" class="btn btn-default btn-lg">Play Again</button>
+            <button id="hint" type="Submit" class="btn btn-default btn-lg">Give me a hint</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

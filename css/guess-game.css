@@ -1,0 +1,96 @@
+body {
+  text-align: center;
+  margin-bottom: 40px;
+  background-color: #e7f6eb;
+  color: #fff;
+  margin: 0;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  top: 12px;
+}
+
+h1 {
+  font-size: 4em;
+  margin: 20px;
+}
+
+p {
+  margin: 0;
+}
+
+#tab {
+  background-color: #90ee90;
+  padding: 30px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+}
+
+#game-controls {
+  margin-bottom: 30px;
+}
+
+#guess-list {
+  color: #747b79;
+  font-size: 1.6em;
+}
+
+#guess-count {
+  margin: 20px;
+  font-size: 1.8em;
+  color: #747b79;
+}
+
+#guess-field {
+  text-align: center;
+  height: 80px;
+  font-size: 1.6em;
+  border-radius: 40px;
+}
+
+p#marquee {
+  margin-top: 10px;
+  font-size: 1.8em;
+  line-height: 1.2em;
+}
+
+.container-fluid {
+  padding: 0;
+  margin: 0;
+}
+
+.navbar {
+  background-color: #90ee90;
+  margin: 0;
+}
+
+/**********
+Heat Colors
+**********/
+
+span#ice {
+  color: blue;
+}
+
+span#cold {
+  color: lightblue;
+}
+
+span#warm {
+  color: orange;
+}
+
+span#hot {
+  color: red;
+}
+
+span#fiery {
+  color: darkred;
+}
+
+span#win {
+  color: gold;
+}
