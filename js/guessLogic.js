@@ -7,7 +7,6 @@ $("document").ready(function() {
     , guessList = {}
     , guess
     , prev
-    , retString
     , vert
     , changeStyles = chStyles();
 
