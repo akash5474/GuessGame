@@ -5,9 +5,7 @@ $("document").ready(function() {
     , guessCount = $("#guess-count")
     , count = 5
     , guessList = {}
-    , guess
     , prev
-    , vert
     , winInterval
     , changeStyles = chStyles();
 
@@ -39,12 +37,11 @@ $("document").ready(function() {
         $("body").css( {color: "#fff"} );
         $("#guess-count").css( {color: "#747b79"} );
         won = false;
-        console.log( flashes );
+
         if (flashes > 3) {
           clearInterval( winInterval );
           flashes = 0;
         }
-
       }
     };
   }
@@ -57,7 +54,7 @@ $("document").ready(function() {
       , correct
       , temp;
 
-    console.log( "Diff:", diff, vert, "Count:", count );
+    // console.log( "Diff:", diff, vert, "Count:", count );
 
     if ( !prev ) {
       prev = guess;
