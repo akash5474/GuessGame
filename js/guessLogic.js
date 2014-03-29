@@ -8,6 +8,7 @@ $("document").ready(function() {
     , guess
     , prev
     , vert
+    , winInterval
     , changeStyles = chStyles();
 
   function guessRandom() {
@@ -19,7 +20,8 @@ $("document").ready(function() {
   }
 
   function chStyles() {
-    var won = false;
+    var won = false
+      , flashes = 0;
 
     return function() {
       if ( won === false && count === -1 ) {
@@ -29,6 +31,7 @@ $("document").ready(function() {
         $("body").css( {color: "#747b79"} );
         $("#guess-count").css( {color: "#fff"} );
         won = true;
+        flashes++;
       } else if ( won === true ) {
         $("body").css( {backgroundColor: "#e7f6eb"} );
         $("#tab").css( {backgroundColor: "#90ee90"} );
@@ -36,6 +39,12 @@ $("document").ready(function() {
         $("body").css( {color: "#fff"} );
         $("#guess-count").css( {color: "#747b79"} );
         won = false;
+        console.log( flashes );
+        if (flashes === 3) {
+          clearInterval( winInterval );
+          flashes = 0;
+        }
+
       }
     };
   }
@@ -48,7 +57,7 @@ $("document").ready(function() {
       , correct
       , temp;
 
-//    console.log( "Diff:", diff, vert, "Count:", count );
+    console.log( "Diff:", diff, vert, "Count:", count );
 
     if ( !prev ) {
       prev = guess;
@@ -70,7 +79,8 @@ $("document").ready(function() {
           +' | '+correct+'</li>');
 
       count = -1;
-      changeStyles();
+      winInterval = setInterval(changeStyles, 500);
+
       return true;
     } else if ( diff <= 3 ) {
       temp = '<span id="fiery">FIERY HOT</span>';
@@ -153,9 +163,11 @@ $("document").ready(function() {
   });
 
   $("#replay").on('click', function() {
+    clearInterval( winInterval );
     val = guessRandom();
     count = 5;
     guessList = {};
+    prev = null;
 
     $("#guess-list ul").empty();
     changeStyles();
