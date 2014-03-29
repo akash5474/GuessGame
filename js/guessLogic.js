@@ -6,39 +6,81 @@ $("document").ready(function() {
     , count = 5
     , guessList = {}
     , guess
+    , prev
     , retString
-    , vert;
+    , vert
+    , changeStyles = chStyles();
 
   function guessRandom() {
     return Math.floor(Math.random()*100)+1;
   }
 
+  function updateGuessCount() {
+    guessCount.text( count.toString() + " Guesses Remaining" );
+  }
+
+  function chStyles() {
+    var won = false;
+
+    return function() {
+      if ( won === false && count === -1 ) {
+        $("body").css( {backgroundColor: "#90ee90"} );
+        $("#tab").css( {backgroundColor: "#e7f6eb"} );
+        $(".navbar").css( {backgroundColor: "#e7f6eb"} );
+        $("body").css( {color: "#747b79"} );
+        $("#guess-count").css( {color: "#fff"} );
+        won = true;
+      } else if ( won === true ) {
+        $("body").css( {backgroundColor: "#e7f6eb"} );
+        $("#tab").css( {backgroundColor: "#90ee90"} );
+        $(".navbar").css( {backgroundColor: "#90ee90"} );
+        $("body").css( {color: "#fff"} );
+        $("#guess-count").css( {color: "#747b79"} );
+        won = false;
+      }
+    };
+  }
+
   function evalGuess( guess ) {
     var vert = guess > val ? "LOWER" : "HIGHER"
       , diff = Math.abs( guess - val )
+      , change
+      , prevDiff
+      , correct
       , temp;
 
-    console.log( "Diff:", diff, vert );
+//    console.log( "Diff:", diff, vert, "Count:", count );
+
+    if ( !prev ) {
+      prev = guess;
+    } else {
+      prevDiff = Math.abs( prev - val )
+
+      change = prevDiff > diff ?
+          '<span id="warm">WARMER</span>' : '<span id="cold">COLDER</span>';
+      prev = guess;
+    }
 
     if ( diff === 0 ) {
-      var correct = '<span id="win">CORRECT</span>';
+      correct = '<span id="win">CORRECT</span>';
       m.empty();
       m.append('Good guess! You are '+correct+'!');
+
       guessCount.text( "You Win!" );
       $("#guess-list ul").append("<li>"+guess
           +' | '+correct+'</li>');
 
-      changeStyles(0);
       count = -1;
+      changeStyles();
       return true;
     } else if ( diff <= 3 ) {
       temp = '<span id="fiery">FIERY HOT</span>';
     } else if ( diff <= 8 && diff > 3 ) {
-      temp = '<span id="hot">HOTTER</span>';
+      temp = '<span id="hot">HOT</span>';
     } else if ( diff <= 15 && diff > 8 ) {
-      temp = '<span id="warm">WARMER</span>';
+      temp = '<span id="warm">WARM</span>';
     } else if ( diff <= 32 && diff > 15 ) {
-      temp = '<span id="cold">COLDER</span>';
+      temp = '<span id="cold">COLD</span>';
     } else {
       temp = '<span id="ice">ICE COLD</span>';
     }
@@ -47,32 +89,22 @@ $("document").ready(function() {
 
     $("#guess-list ul").append("<li>"+guess+" | "+temp+"</li>");
     m.empty();
-    m.append("You are getting "+temp+"! "+"Guess "+vert+"!");
-  }
 
-  function updateGuessCount() {
-    guessCount.text( count.toString() + " Guesses Remaining" );
-  }
-
-  function changeStyles(opt) {
-    if ( opt === 0 ) {
-      $("body").css( {backgroundColor: "#90ee90"} );
-      $("#tab").css( {backgroundColor: "#e7f6eb"} );
-      $(".navbar").css( {backgroundColor: "#e7f6eb"} );
-      $("body").css( {color: "#747b79"} );
-      $("#guess-count").css( {color: "#fff"} );
-    } else if ( opt === 1 ) {
-      $("body").css( {backgroundColor: "#e7f6eb"} );
-      $("#tab").css( {backgroundColor: "#90ee90"} );
-      $(".navbar").css( {backgroundColor: "#90ee90"} );
-      $("body").css( {color: "#fff"} );
-      $("#guess-count").css( {color: "#747b79"} );
+    if ( prevDiff ) {
+      m.append("You are "+temp+"! You're getting "+change
+          +"! Guess "+vert+"!");
+    } else {
+      m.append("You are "+temp+"!"+" Guess "+vert+"!");
     }
   }
 
   function submitGuess() {
     var inp = $("input").val().trim()
       , guess = parseInt( inp );
+
+    if ( count < 1 ) {
+      return;
+    }
 
     if ( guess <= 100 && guess > 0
           && inp.search(/[^0-9]/) === -1 ) {
@@ -86,10 +118,11 @@ $("document").ready(function() {
         count--;
         updateGuessCount();
         evalGuess( guess );
-      } else if ( count === -1) {
+      } else if ( count === -1 ) {
         guessCount.text( "You have already won!" );
         m.text( "Press Play Again!" );
       } else {
+        count = 0;
         if ( evalGuess( guess ) ) {
           return;
         } else {
@@ -126,7 +159,7 @@ $("document").ready(function() {
     guessList = {};
 
     $("#guess-list ul").empty();
-    changeStyles(1);
+    changeStyles();
     updateGuessCount();
     m.text("Guess a number between 1 and 100");
   });
