@@ -40,7 +40,7 @@ $("document").ready(function() {
         $("#guess-count").css( {color: "#747b79"} );
         won = false;
         console.log( flashes );
-        if (flashes === 3) {
+        if (flashes > 3) {
           clearInterval( winInterval );
           flashes = 0;
         }
