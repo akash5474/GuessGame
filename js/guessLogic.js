@@ -141,9 +141,7 @@ $("document").ready(function() {
     }
   }
 
-  $("#submit").on('click', function() {
-    submitGuess();
-  });
+  $("#submit").on('click', submitGuess);
 
   $("input").on('keydown', function(ev) {
     if ( ev.keyCode === 13 ) {
